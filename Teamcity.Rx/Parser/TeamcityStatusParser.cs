@@ -13,6 +13,8 @@ namespace Teamcity.Rx.Parser
 
         public TeamcityStatusParser(string html)
         {
+            _log.Debug("Parsing the teamcity status html");
+
             _projects = Parse(html);
         }
 

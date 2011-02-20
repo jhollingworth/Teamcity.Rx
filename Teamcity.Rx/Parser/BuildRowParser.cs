@@ -1,12 +1,17 @@
 ﻿using System.Text.RegularExpressions;
 using HtmlAgilityPack;
+using log4net;
 
 namespace Teamcity.Rx.Parser
 {
     internal class BuildRowParser : RowParser
     {
+        private static readonly ILog _log = LogManager.GetLogger(typeof(BuildRowParser));
+
         public Build Parse(Project project, HtmlNode[] columns)
         {
+            _log.DebugFormat("Parsing a build configuration for {0}", project.Name);
+
             if (columns.Length != 3)
             {
                 throw new TeamcityStatusParseException("The build row had the incorrect number of columns");
@@ -31,6 +36,8 @@ namespace Teamcity.Rx.Parser
                 build.CurrentBuildNumber = currentBuildLink.InnerText.Replace("#", string.Empty);
                 build.CurrentBuildUrl = currentBuildLink.Attributes["href"].Value;
             }
+
+            _log.DebugFormat("Parsed build configuration {0} ({1}) - {2}", build.Name, build.Id, build.State);
 
             return build;
         }

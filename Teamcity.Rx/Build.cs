@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq.Expressions;
 using System.Runtime.Serialization;
-using Teamcity.Rx.Events;
 
 namespace Teamcity.Rx
 {
@@ -58,32 +54,7 @@ namespace Teamcity.Rx
         {
             return false == Equals(left, right);
         }
-
-        public IEnumerable<ITeamcityEvent> Diff(Build b1)
-        {
-            var updatedValues = new List<Expression<Func<Build, object>>>();
-
-            if(State != b1.State)
-            {
-                updatedValues.Add(b => b.State);    
-            }
-
-            if(false == Name.Equals(b1.Name))
-            {
-                updatedValues.Add(b => b.Name);
-            }
-
-            if(false == Url.Equals(b1.Url))
-            {
-                updatedValues.Add(b => b.Url);
-            }
-
-            if(updatedValues.Count > 0)
-            {
-                yield return new BuildUpdated(this, updatedValues);
-            }
-        }
-
+        
         internal Build()
         {
         }

@@ -89,29 +89,5 @@ namespace Teamcity.Rx
         {
             return !Equals(left, right);
         }
-
-        public IEnumerable<ITeamcityEvent> Diff(Project p1)
-        {
-            foreach (var build in _builds.Where(build => false == p1._builds.ContainsKey(build.Key)))
-            {
-                yield return new BuildAdded(build.Value);
-            }
-
-            foreach (var build in p1._builds.Where(build => false == _builds.ContainsKey(build.Key)))
-            {
-                yield return new BuildRemoved(build.Value);
-            }
-
-            var buildDifferences = from project in p1.Intersect(this)
-                                   let build1 = p1.First(s => s.Id.Equals(project.Id))
-                                   let build2 = this.First(s => s.Id.Equals(project.Id))
-                                   from difference in build2.Diff(build1)
-                                   select difference;
-
-            foreach (var difference in buildDifferences)
-            {
-                yield return difference;
-            }
-        }
     }
 }

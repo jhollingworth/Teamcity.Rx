@@ -25,7 +25,7 @@ namespace Teamcity.Rx
             }
         }
         
-        internal void UpdateProjects(List<Project> projects)
+        internal void UpdateProjects(IEnumerable<Project> projects)
         {
             lock (_projectsLock)
             {
