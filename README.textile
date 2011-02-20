@@ -1,0 +1,11 @@
+h1. Teamcity.Rx
+
+Gives you an observable class which will emit any changes made in teamcity (e.g. build state change, project added, build configuration removed, etc).
+
+<pre>
+var teamcityObservable = new TeamcityObservable("http://teamcity.foo.com", "foo", "bar");
+teamcityObservable.Subscribe(e => System.Console.WriteLine(e.EventId));
+
+var teamcity = teamcityObservable.Teamcity;
+Console.WriteLine(teamcity["Some Project"]["Some Build Configuration"].State);
+</pre>
