@@ -57,7 +57,6 @@ namespace Teamcity.Rx
             }
         }
 
-
         public IDisposable Subscribe(IObserver<T> observer)
         {
             lock(_observersLock)
